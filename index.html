@@ -6,31 +6,26 @@
   <title>WHISKEY BRANCH</title>
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f3f5f7;
       color: #222;
     }
-
     .app {
       max-width: 1100px;
       margin: 0 auto;
       min-height: 100vh;
       background: white;
     }
-
     .header {
       background: #243447;
       color: white;
       padding: 20px;
     }
-
     .header h1 {
       margin: 0 0 8px 0;
     }
-
     .tabs {
       display: flex;
       flex-wrap: wrap;
@@ -39,7 +34,6 @@
       background: #e7ebef;
       border-bottom: 1px solid #d3dbe3;
     }
-
     .tab-btn {
       border: 1px solid #c6d0da;
       background: white;
@@ -48,21 +42,17 @@
       cursor: pointer;
       font-weight: bold;
     }
-
     .tab-btn.active {
       background: #243447;
       color: white;
       border-color: #243447;
     }
-
     .content {
       padding: 18px;
     }
-
     .hidden {
       display: none;
     }
-
     .card {
       background: white;
       border: 1px solid #dbe2e9;
@@ -70,17 +60,14 @@
       padding: 14px;
       margin-bottom: 14px;
     }
-
     .row {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
-
     .col {
       flex: 1 1 300px;
     }
-
     input,
     textarea,
     select {
@@ -88,4 +75,707 @@
       margin-top: 6px;
       margin-bottom: 12px;
       padding: 10px;
-      border: 1px solid #c8d1da
+      border: 1px solid #c8d1da;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .btn {
+      border: none;
+      background: #243447;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn.secondary {
+      background: #6e7d8c;
+    }
+    .meta {
+      color: #65717d;
+      font-size: 13px;
+      margin-top: 6px;
+    }
+    .pill {
+      display: inline-block;
+      background: #edf2f6;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 6px;
+      margin-bottom: 8px;
+    }
+    .listing-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #d9e0e6;
+    }
+    .gallery-grid,
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .reply {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f6f8fa;
+      border-radius: 10px;
+    }
+    a.link {
+      color: #1d5ebc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <img src="https://i.imgur.com/SqeKyZg.png" style="height:50px; display:block; margin-bottom:10px;" alt="Whiskey Branch logo">
+      <h1>WHISKEY BRANCH</h1>
+      <h1>COMMUNITY</h1>
+      <div>Chat, photos, videos, events, questions, for sale / trade, and forgotten / found</div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="chat">Chat</button>
+      <button class="tab-btn" data-tab="gallery">Photo Gallery</button>
+      <button class="tab-btn" data-tab="videos">Videos</button>
+      <button class="tab-btn" data-tab="events">Events</button>
+      <button class="tab-btn" data-tab="questions">Questions</button>
+      <button class="tab-btn" data-tab="market">For Sale / Trade</button>
+      <button class="tab-btn" data-tab="lostfound">Forgotten / Found</button>
+    </div>
+
+    <div class="content">
+      <section id="chat" class="tab-section">
+        <div class="card">
+          <h2>Group Chat</h2>
+          <div class="row">
+            <div class="col">
+              <label>Your name
+                <input id="chatAuthor" value="Maya">
+              </label>
+            </div>
+            <div class="col">
+              <label>Message
+                <input id="chatText" placeholder="Type your message">
+              </label>
+            </div>
+          </div>
+          <button class="btn" id="addChatBtn">Send Message</button>
+        </div>
+        <div id="chatList"></div>
+      </section>
+
+      <section id="gallery" class="tab-section hidden">
+        <div class="card">
+          <h2>Photo Gallery</h2>
+          <div class="row">
+            <div class="col">
+              <label>Photo title
+                <input id="photoTitle" placeholder="Community Cookout">
+              </label>
+            </div>
+            <div class="col">
+              <label>Uploaded by
+                <input id="photoUploader" value="Maya">
+              </label>
+            </div>
+          </div>
+          <label>Description
+            <textarea id="photoCaption" placeholder="Short caption for this photo"></textarea>
+          </label>
+          <label>Photo URL
+            <input id="photoUrl" placeholder="https://...">
+          </label>
+          <button class="btn" id="addPhotoBtn">Add Photo</button>
+        </div>
+        <div id="galleryList" class="gallery-grid"></div>
+      </section>
+
+      <section id="videos" class="tab-section hidden">
+        <div class="card">
+          <h2>Videos</h2>
+          <button class="btn" id="uploadLinkBtn">Open Upload Link</button>
+          <button class="btn secondary" id="sampleVideoBtn">Add Sample Video</button>
+          <div class="meta" style="margin-top:10px;">The upload link can be changed later to your real upload page.</div>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <div class="col">
+              <label>Video title
+                <input id="videoTitle" placeholder="Weekend Recap">
+              </label>
+            </div>
+            <div class="col">
+              <label>Uploader
+                <input id="videoUploader" value="Maya">
+              </label>
+            </div>
+          </div>
+          <label>Caption
+            <textarea id="videoCaption" placeholder="Short description"></textarea>
+          </label>
+          <div class="row">
+            <div class="col">
+              <label>Thumbnail image URL
+                <input id="videoThumb" placeholder="https://...">
+              </label>
+            </div>
+            <div class="col">
+              <label>Video URL
+                <input id="videoUrl" placeholder="https://...">
+              </label>
+            </div>
+          </div>
+          <button class="btn" id="addVideoBtn">Post Video</button>
+        </div>
+        <div id="videoList"></div>
+      </section>
+
+      <section id="events" class="tab-section hidden">
+        <div class="card">
+          <h2>Upcoming Events</h2>
+          <div class="row">
+            <div class="col">
+              <label>Event title
+                <input id="eventTitle" placeholder="Community Meetup">
+              </label>
+            </div>
+            <div class="col">
+              <label>Date and time
+                <input id="eventDate" placeholder="April 12 • 6:30 PM">
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Location
+                <input id="eventLocation" placeholder="Main Hall">
+              </label>
+            </div>
+            <div class="col">
+              <label>Details
+                <input id="eventDetails" placeholder="Food, music, planning">
+              </label>
+            </div>
+          </div>
+          <button class="btn" id="addEventBtn">Add Event</button>
+        </div>
+        <div id="eventList"></div>
+      </section>
+
+      <section id="questions" class="tab-section hidden">
+        <div class="card">
+          <h2>Questions</h2>
+          <div class="row">
+            <div class="col">
+              <label>Name
+                <input id="questionAuthor" value="Maya">
+              </label>
+            </div>
+            <div class="col">
+              <label>Question
+                <input id="questionText" placeholder="Ask a question">
+              </label>
+            </div>
+          </div>
+          <button class="btn" id="addQuestionBtn">Post Question</button>
+        </div>
+        <div id="questionList"></div>
+      </section>
+
+      <section id="market" class="tab-section hidden">
+        <div class="card">
+          <h2>For Sale / Trade</h2>
+          <div class="row">
+            <div class="col">
+              <label>Title
+                <input id="marketTitle" placeholder="Folding Table">
+              </label>
+            </div>
+            <div class="col">
+              <label>Seller
+                <input id="marketSeller" value="Maya">
+              </label>
+            </div>
+          </div>
+          <label>Description
+            <textarea id="marketDescription" placeholder="Describe the item"></textarea>
+          </label>
+          <div class="row">
+            <div class="col">
+              <label>Price
+                <input id="marketPrice" placeholder="$40 or Trade">
+              </label>
+            </div>
+            <div class="col">
+              <label>Type
+                <select id="marketType">
+                  <option>For Sale</option>
+                  <option>Trade</option>
+                  <option>Sale/Trade</option>
+                </select>
+              </label>
+            </div>
+            <div class="col">
+              <label>Condition
+                <input id="marketCondition" placeholder="Good">
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label>Location
+                <input id="marketLocation" placeholder="Houston">
+              </label>
+            </div>
+            <div class="col">
+              <label>Image URL
+                <input id="marketImage" placeholder="https://...">
+              </label>
+            </div>
+          </div>
+          <button class="btn" id="addMarketBtn">Add Listing</button>
+        </div>
+        <div id="marketList" class="market-grid"></div>
+      </section>
+
+      <section id="lostfound" class="tab-section hidden">
+        <div class="card">
+          <h2>Forgotten / Found</h2>
+          <div class="row">
+            <div class="col">
+              <label>Type
+                <select id="lfType">
+                  <option>Lost</option>
+                  <option>Found</option>
+                </select>
+              </label>
+            </div>
+            <div class="col">
+              <label>Your name
+                <input id="lfName" value="Maya">
+              </label>
+            </div>
+          </div>
+
+          <label>Item
+            <input id="lfItem" placeholder="Wallet, keys, phone...">
+          </label>
+
+          <label>Description
+            <textarea id="lfDescription" placeholder="Describe the item"></textarea>
+          </label>
+
+          <div class="row">
+            <div class="col">
+              <label>Location
+                <input id="lfLocation" placeholder="Where it was lost/found">
+              </label>
+            </div>
+            <div class="col">
+              <label>Image URL (optional)
+                <input id="lfImage" placeholder="https://...">
+              </label>
+            </div>
+          </div>
+
+          <button class="btn" id="addLFBtn">Post</button>
+        </div>
+        <div id="lfList"></div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const UPLOAD_LINK = "https://example.com/upload";
+
+    const state = {
+      chat: [
+        { id: makeId(), author: "Maya", text: "Welcome to the group app.", createdAt: timeNow() },
+        { id: makeId(), author: "Chris", text: "Glad to be here.", createdAt: timeNow() }
+      ],
+      gallery: [
+        {
+          id: makeId(),
+          title: "Welcome Photo",
+          caption: "First gallery image.",
+          uploader: "Admin",
+          imageUrl: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
+          createdAt: timeNow()
+        }
+      ],
+      videos: [
+        {
+          id: makeId(),
+          title: "Weekend Recap",
+          caption: "Short clip from the meetup.",
+          uploader: "Janelle",
+          createdAt: timeNow(),
+          thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
+          videoUrl: "https://www.youtube.com/"
+        }
+      ],
+      events: [
+        {
+          id: makeId(),
+          title: "Community Meet & Greet",
+          date: "April 12 • 6:30 PM",
+          location: "Main Hall",
+          details: "Food, introductions, and planning."
+        }
+      ],
+      questions: [
+        {
+          id: makeId(),
+          author: "Taylor",
+          question: "What time should volunteers arrive?",
+          createdAt: timeNow(),
+          replies: [
+            { id: makeId(), author: "Admin", text: "Please arrive by 9:30 AM." }
+          ]
+        }
+      ],
+      market: [
+        {
+          id: makeId(),
+          title: "Folding Table",
+          description: "Lightly used 6-foot folding table.",
+          price: "$40",
+          type: "For Sale",
+          condition: "Good",
+          seller: "Aaron",
+          location: "Houston",
+          status: "Available",
+          image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80"
+        }
+      ],
+      lostfound: []
+    };
+
+    function makeId() {
+      return Math.random().toString(36).slice(2, 10);
+    }
+
+    function timeNow() {
+      return new Date().toLocaleString();
+    }
+
+    function safe(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    function renderChat() {
+      document.getElementById("chatList").innerHTML = state.chat.slice().reverse().map(item => `
+        <div class="card">
+          <strong>${safe(item.author)}</strong>
+          <div class="meta">${safe(item.createdAt)}</div>
+          <div style="margin-top:10px;">${safe(item.text)}</div>
+        </div>
+      `).join("");
+    }
+
+    function renderGallery() {
+      document.getElementById("galleryList").innerHTML = state.gallery.slice().reverse().map(item => `
+        <div class="card">
+          ${item.imageUrl ? `<img class="listing-img" src="${safe(item.imageUrl)}" alt="gallery photo">` : ""}
+          <h3>${safe(item.title)}</h3>
+          <div class="meta">Uploaded by ${safe(item.uploader)} • ${safe(item.createdAt)}</div>
+          <p>${safe(item.caption)}</p>
+        </div>
+      `).join("");
+    }
+
+    function renderVideos() {
+      document.getElementById("videoList").innerHTML = state.videos.slice().reverse().map(item => `
+        <div class="card">
+          ${item.thumbnail ? `<img class="listing-img" src="${safe(item.thumbnail)}" alt="thumbnail">` : ""}
+          <h3>${safe(item.title)}</h3>
+          <div class="meta">Posted by ${safe(item.uploader)} • ${safe(item.createdAt)}</div>
+          <p>${safe(item.caption)}</p>
+          <a class="link" href="${safe(item.videoUrl)}" target="_blank">Open video</a>
+        </div>
+      `).join("");
+    }
+
+    function renderEvents() {
+      document.getElementById("eventList").innerHTML = state.events.slice().reverse().map(item => `
+        <div class="card">
+          <h3>${safe(item.title)}</h3>
+          <div class="meta">${safe(item.date)} • ${safe(item.location)}</div>
+          <p>${safe(item.details)}</p>
+        </div>
+      `).join("");
+    }
+
+    function renderQuestions() {
+      document.getElementById("questionList").innerHTML = state.questions.slice().reverse().map(item => `
+        <div class="card">
+          <h3>${safe(item.question)}</h3>
+          <div class="meta">Asked by ${safe(item.author)} • ${safe(item.createdAt)}</div>
+          <div style="margin-top:12px;">
+            ${(item.replies || []).map(reply => `
+              <div class="reply">
+                <strong>${safe(reply.author)}</strong>
+                <div style="margin-top:6px;">${safe(reply.text)}</div>
+              </div>
+            `).join("")}
+          </div>
+          <div style="margin-top:12px;">
+            <input id="replyAuthor_${item.id}" placeholder="Your name">
+            <input id="replyText_${item.id}" placeholder="Write a reply">
+            <button class="btn" onclick="addReply('${item.id}')">Reply</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderMarket() {
+      document.getElementById("marketList").innerHTML = state.market.slice().reverse().map(item => `
+        <div class="card">
+          ${item.image ? `<img class="listing-img" src="${safe(item.image)}" alt="listing image">` : ""}
+          <div style="margin-top:10px;">
+            <span class="pill">${safe(item.type)}</span>
+            <span class="pill">${safe(item.status)}</span>
+          </div>
+          <h3>${safe(item.title)}</h3>
+          <div><strong>${safe(item.price)}</strong></div>
+          <div class="meta">${safe(item.condition)} • ${safe(item.location)} • Seller: ${safe(item.seller)}</div>
+          <p>${safe(item.description)}</p>
+        </div>
+      `).join("");
+    }
+
+    function renderLostFound() {
+      const el = document.getElementById("lfList");
+      if (!state.lostfound.length) {
+        el.innerHTML = '<div class="card">No forgotten / found posts yet.</div>';
+        return;
+      }
+
+      el.innerHTML = state.lostfound.slice().reverse().map(item => `
+        <div class="card">
+          ${item.image ? `<img class="listing-img" src="${safe(item.image)}" alt="forgotten or found item">` : ""}
+          <span class="pill">${safe(item.type)}</span>
+          <h3>${safe(item.item)}</h3>
+          <div class="meta">${safe(item.location)} • ${safe(item.name)}</div>
+          <p>${safe(item.description)}</p>
+        </div>
+      `).join("");
+    }
+
+    function renderAll() {
+      renderChat();
+      renderGallery();
+      renderVideos();
+      renderEvents();
+      renderQuestions();
+      renderMarket();
+      renderLostFound();
+    }
+
+    document.querySelectorAll(".tab-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-section").forEach(s => s.classList.add("hidden"));
+        this.classList.add("active");
+        document.getElementById(this.getAttribute("data-tab")).classList.remove("hidden");
+      });
+    });
+
+    document.getElementById("addChatBtn").addEventListener("click", function() {
+      const author = document.getElementById("chatAuthor").value.trim() || "Anonymous";
+      const text = document.getElementById("chatText").value.trim();
+
+      if (!text) {
+        alert("Enter a message.");
+        return;
+      }
+
+      state.chat.push({ id: makeId(), author, text, createdAt: timeNow() });
+      document.getElementById("chatText").value = "";
+      renderChat();
+    });
+
+    document.getElementById("addPhotoBtn").addEventListener("click", function() {
+      const title = document.getElementById("photoTitle").value.trim();
+      const uploader = document.getElementById("photoUploader").value.trim() || "Anonymous";
+      const caption = document.getElementById("photoCaption").value.trim();
+      const imageUrl = document.getElementById("photoUrl").value.trim();
+
+      if (!title || !imageUrl) {
+        alert("Enter at least a photo title and photo URL.");
+        return;
+      }
+
+      state.gallery.push({
+        id: makeId(),
+        title,
+        uploader,
+        caption,
+        imageUrl,
+        createdAt: timeNow()
+      });
+
+      ["photoTitle", "photoCaption", "photoUrl"].forEach(id => document.getElementById(id).value = "");
+      renderGallery();
+    });
+
+    document.getElementById("uploadLinkBtn").addEventListener("click", function() {
+      window.open(UPLOAD_LINK, "_blank");
+    });
+
+    document.getElementById("sampleVideoBtn").addEventListener("click", function() {
+      state.videos.push({
+        id: makeId(),
+        title: "Sample Upload",
+        caption: "This is a sample video post.",
+        uploader: "Admin",
+        createdAt: timeNow(),
+        thumbnail: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80",
+        videoUrl: "https://www.youtube.com/"
+      });
+      renderVideos();
+    });
+
+    document.getElementById("addVideoBtn").addEventListener("click", function() {
+      const title = document.getElementById("videoTitle").value.trim();
+      const uploader = document.getElementById("videoUploader").value.trim() || "Anonymous";
+      const caption = document.getElementById("videoCaption").value.trim();
+      const thumbnail = document.getElementById("videoThumb").value.trim();
+      const videoUrl = document.getElementById("videoUrl").value.trim();
+
+      if (!title || !videoUrl) {
+        alert("Enter at least a title and video URL.");
+        return;
+      }
+
+      state.videos.push({ id: makeId(), title, caption, uploader, createdAt: timeNow(), thumbnail, videoUrl });
+      ["videoTitle", "videoCaption", "videoThumb", "videoUrl"].forEach(id => document.getElementById(id).value = "");
+      renderVideos();
+    });
+
+    document.getElementById("addEventBtn").addEventListener("click", function() {
+      const title = document.getElementById("eventTitle").value.trim();
+      const date = document.getElementById("eventDate").value.trim();
+      const location = document.getElementById("eventLocation").value.trim();
+      const details = document.getElementById("eventDetails").value.trim();
+
+      if (!title || !date) {
+        alert("Enter at least event title and date.");
+        return;
+      }
+
+      state.events.push({ id: makeId(), title, date, location, details });
+      ["eventTitle", "eventDate", "eventLocation", "eventDetails"].forEach(id => document.getElementById(id).value = "");
+      renderEvents();
+    });
+
+    document.getElementById("addQuestionBtn").addEventListener("click", function() {
+      const author = document.getElementById("questionAuthor").value.trim() || "Anonymous";
+      const question = document.getElementById("questionText").value.trim();
+
+      if (!question) {
+        alert("Enter a question.");
+        return;
+      }
+
+      state.questions.push({ id: makeId(), author, question, createdAt: timeNow(), replies: [] });
+      document.getElementById("questionText").value = "";
+      renderQuestions();
+    });
+
+    function addReply(questionId) {
+      const author = document.getElementById("replyAuthor_" + questionId).value.trim() || "Anonymous";
+      const text = document.getElementById("replyText_" + questionId).value.trim();
+
+      if (!text) {
+        alert("Enter a reply.");
+        return;
+      }
+
+      const question = state.questions.find(q => q.id === questionId);
+      if (!question) return;
+
+      question.replies.push({ id: makeId(), author, text });
+      renderQuestions();
+    }
+    window.addReply = addReply;
+
+    document.getElementById("addMarketBtn").addEventListener("click", function() {
+      const title = document.getElementById("marketTitle").value.trim();
+      const seller = document.getElementById("marketSeller").value.trim() || "Anonymous";
+      const description = document.getElementById("marketDescription").value.trim();
+      const price = document.getElementById("marketPrice").value.trim();
+      const type = document.getElementById("marketType").value;
+      const condition = document.getElementById("marketCondition").value.trim();
+      const location = document.getElementById("marketLocation").value.trim();
+      const image = document.getElementById("marketImage").value.trim();
+
+      if (!title) {
+        alert("Enter a listing title.");
+        return;
+      }
+
+      state.market.push({
+        id: makeId(),
+        title,
+        seller,
+        description,
+        price,
+        type,
+        condition,
+        location,
+        status: "Available",
+        image
+      });
+
+      ["marketTitle", "marketDescription", "marketPrice", "marketCondition", "marketLocation", "marketImage"].forEach(id => document.getElementById(id).value = "");
+      renderMarket();
+    });
+
+    document.getElementById("addLFBtn").addEventListener("click", function() {
+      const type = document.getElementById("lfType").value;
+      const name = document.getElementById("lfName").value.trim() || "Anonymous";
+      const item = document.getElementById("lfItem").value.trim();
+      const description = document.getElementById("lfDescription").value.trim();
+      const location = document.getElementById("lfLocation").value.trim();
+      const image = document.getElementById("lfImage").value.trim();
+
+      if (!item) {
+        alert("Enter an item name.");
+        return;
+      }
+
+      state.lostfound.push({
+        id: makeId(),
+        type,
+        name,
+        item,
+        description,
+        location,
+        image
+      });
+
+      ["lfItem", "lfDescription", "lfLocation", "lfImage"].forEach(id => document.getElementById(id).value = "");
+      renderLostFound();
+    });
+
+    renderAll();
+  </script>
+</body>
+</html>
