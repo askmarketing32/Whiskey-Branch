@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WHISKEY BRANCH</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f5f7;
+      color: #222;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: white;
+    }
+
+    .header {
+      background: #243447;
+      color: white;
+      padding: 20px;
+    }
+
+    .header h1 {
+      margin: 0 0 8px 0;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+      background: #e7ebef;
+      border-bottom: 1px solid #d3dbe3;
+    }
+
+    .tab-btn {
+      border: 1px solid #c6d0da;
+      background: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .tab-btn.active {
+      background: #243447;
+      color: white;
+      border-color: #243447;
+    }
+
+    .content {
+      padding: 18px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #dbe2e9;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .col {
+      flex: 1 1 300px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      margin-top: 6px;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid #c8d1da
